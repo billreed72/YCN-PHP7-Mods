@@ -197,9 +197,9 @@ if( ! class_exists( 'avia_adminpages' ) )
 			$html = new avia_htmlhelper($this->avia_superobject);
 			
 			echo $html->page_header();
-			
 			foreach($this->avia_superobject->option_pages as $option_page)
 			{
+				
 				if($current_slug == $option_page['parent'])
 				{
 					echo $html->create_container_based_on_slug($option_page, $firstClass);
