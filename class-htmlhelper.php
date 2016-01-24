@@ -111,26 +111,28 @@ if( ! class_exists( 'avia_htmlhelper' ) )
 		
 		function create_container_based_on_slug($option_page, $firstClass = '')
 		{
+						
 			$output = "";
 		
 			//get all elements of the current page and save them to the page elements array
 			$page_elements = $this->get_page_elements($option_page['slug']);
-		
+			
 			//subpage heading
 			$output .= $this->render_page_container($option_page, $firstClass);
-			
+
 			//remove button if available:
 			if(isset($option_page['removable'])) 
 			{
 				$output .= "<a href='#".$option_page['slug']."' title='".$option_page['removable']."' class='avia_remove_dynamic_page'>".$option_page['removable']."</a>";
 			}
 			
+			
 			//page elements
+			
 			foreach($page_elements as $key=>$element)
 			{	
 				$output .= $this->render_single_element($element);
 			}
-			
 			$output .= $this->render_page_container_end();
 			
 			
@@ -187,20 +189,18 @@ if( ! class_exists( 'avia_htmlhelper' ) )
 					$output .= '		<span class="avia_clone_loading avia_removable_element_loading avia_hidden">Loading</span>';
 					$output .= "		<a href='#".$element['id']."' title='".$element['removable']."' class='avia_remove_dynamic_element'><span>".$element['removable']."</span></a>";
 					$dynamic_end = '<div class="avia_clear"></div></div></div></div>';
-				}				
-					
-					
-					
+				}	
+								
 				//check if we should only render the element itself or description as well
 				if($element['type'] == 'group' || (isset($element['nodescription']) && $element['nodescription'] != ""))
-				{
+				{					
 					if(isset($element['use_function']))
 					{
-						$output .= $element['type']( $element );
+						$output .= ${$element['type']}( $element );
 					}
 					else
 					{
-						$output .= $this->$element['type']( $element );
+						$output .= $this->{$element['type']}( $element );
 					}
 				}
 				else
@@ -215,16 +215,18 @@ if( ! class_exists( 'avia_htmlhelper' ) )
 					$output .= $this->description( $element );
 					if(isset($element['use_function']))
 					{
-						$output .= $element['type']( $element );
+						 
+						$output .= ${$element['type']}( $element );
 					}
 					else
 					{
-						$output .= $this->$element['type']( $element );
+						$output .= $this->{$element['type']}( $element );
 					}
 					
 					$output .= $this->section_end( $element );
 				}
 				$output .= $dynamic_end;
+
 				return $output;
 			}
 		}
