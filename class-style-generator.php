@@ -120,7 +120,7 @@ if( !class_exists( 'avia_style_generator' ) )
 					//check if a executing method was passed, if not simply put the string together based on the key and value array
 					if(isset($rule['key']) && method_exists($this, $rule['key']) && $rule['value'] != "")
 					{
-						$this->output .= $this->$rule['key']($rule)."\n";
+						$this->output .= $this->{$rule['key']}($rule)."\n";
 					}
 					else if($rule['value'] != "")
 					{
